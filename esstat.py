@@ -40,7 +40,7 @@ def main():
 
     parser.add_argument("--url", help="the url of cluster (default localhost)",default="localhost", required=False)
     parser.add_argument("--port", help="the port of cluster (default 9200)", default=9200, required=False)
-    parser.add_argument("--interval", help="the interval of stat api request (default 1s)", default=1, required=False)
+    parser.add_argument("--interval", help="the interval of stat api request (default 1s)", default=1, required=False, type=int)
 
     args = parser.parse_args()
 
@@ -105,20 +105,20 @@ def main():
 
         if havingPrevData == True :
 
-            perfData['indexTotalDiff'] = indexTotalCurr - indexTotalPrev
-            perfData['indexTimeDiff'] = indexTimeCurr - indexTimePrev
-            perfData['getTotalDiff'] = getTotalCurr - getTotalPrev
-            perfData['getTimeDiff'] = getTimeCurr - getTimePrev
-            perfData['queryTotalDiff'] = queryTotalCurr - queryTotalPrev
-            perfData['queryTimeDiff'] = queryTimeCurr - queryTimePrev
-            perfData['fetchTotalDiff'] = fetchTotalCurr - fetchTotalPrev
-            perfData['fetchTimeDiff'] = fetchTimeCurr - fetchTimePrev
-            perfData['mergeTotalDiff'] = mergeTotalCurr - mergeTotalPrev
-            perfData['mergeTimeDiff'] = mergeTimeCurr - mergeTimePrev
-            perfData['refreshTotalDiff'] = refreshTotalCurr - refreshTotalPrev
-            perfData['refreshTimeDiff'] = refreshTimeCurr - refreshTimePrev
-            perfData['flushTotalDiff'] = flushTotalCurr - flushTotalPrev
-            perfData['flushTimeDiff'] = flushTimeCurr - flushTimePrev
+            perfData['indexTotalDiff'] = (indexTotalCurr - indexTotalPrev) / interval
+            perfData['indexTimeDiff'] = (indexTimeCurr - indexTimePrev) / interval
+            perfData['getTotalDiff'] = (getTotalCurr - getTotalPrev) / interval
+            perfData['getTimeDiff'] = (getTimeCurr - getTimePrev) / interval
+            perfData['queryTotalDiff'] = (queryTotalCurr - queryTotalPrev) / interval
+            perfData['queryTimeDiff'] = (queryTimeCurr - queryTimePrev) / interval
+            perfData['fetchTotalDiff'] = (fetchTotalCurr - fetchTotalPrev) / interval
+            perfData['fetchTimeDiff'] = (fetchTimeCurr - fetchTimePrev) / interval
+            perfData['mergeTotalDiff'] = (mergeTotalCurr - mergeTotalPrev) / interval
+            perfData['mergeTimeDiff'] = (mergeTimeCurr - mergeTimePrev) / interval
+            perfData['refreshTotalDiff'] = (refreshTotalCurr - refreshTotalPrev) / interval
+            perfData['refreshTimeDiff'] = (refreshTimeCurr - refreshTimePrev) / interval
+            perfData['flushTotalDiff'] = (flushTotalCurr - flushTotalPrev) / interval
+            perfData['flushTimeDiff'] = (flushTimeCurr - flushTimePrev) / interval
 
             printData(perfData)
 
