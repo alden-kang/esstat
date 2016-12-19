@@ -27,11 +27,11 @@ def printError(message):
 def printHeader():
 
     print "%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s" % \
-        ( "health","doc/s","time/doc","get/s","time/get","query/s","time/query","fetch/s","time/fetch" )
+        ( "health","doc/s","time(ms)/doc","get/s","time(ms)/get","query/s","time(ms)/query","fetch/s","time(ms)/fetch" )
 
 def printData(perfData):
 
-    print "%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s" % \
+    print "%10s\t%10s\t%12.2f\t%10s\t%12.2f\t%10s\t%12.2f\t%10s\t%122f" % \
         (perfData['clusterHealth'], perfData['indexTotalDiff'], perfData['indexTimeDiff'], perfData['getTotalDiff'], perfData['getTimeDiff'], perfData['queryTotalDiff'], perfData['queryTimeDiff'], perfData['fetchTotalDiff'], perfData['fetchTimeDiff'])
 
 def main():
@@ -106,19 +106,46 @@ def main():
         if havingPrevData == True :
 
             perfData['indexTotalDiff'] = (indexTotalCurr - indexTotalPrev) / interval
-            perfData['indexTimeDiff'] = (indexTimeCurr - indexTimePrev) / interval
+            try:
+                perfData['indexTimeDiff'] = float(indexTimeCurr - indexTimePrev) / float(perfData['indexTotalDiff'])
+            except:
+                perfData['indexTimeDiff'] = 0.0
+
             perfData['getTotalDiff'] = (getTotalCurr - getTotalPrev) / interval
-            perfData['getTimeDiff'] = (getTimeCurr - getTimePrev) / interval
+            try:
+                perfData['getTimeDiff'] = float(getTimeCurr - getTimePrev) / float(perfData['getTotalDiff'])
+            except:
+                perfData['getTimeDiff'] = 0.0
+
             perfData['queryTotalDiff'] = (queryTotalCurr - queryTotalPrev) / interval
-            perfData['queryTimeDiff'] = (queryTimeCurr - queryTimePrev) / interval
+            try:
+                perfData['queryTimeDiff'] = float(queryTimeCurr - queryTimePrev) / float(perfData['queryTotalDiff'])
+            except:
+                perfData['queryTimeDiff'] = 0.0
+
             perfData['fetchTotalDiff'] = (fetchTotalCurr - fetchTotalPrev) / interval
-            perfData['fetchTimeDiff'] = (fetchTimeCurr - fetchTimePrev) / interval
+            try:
+                perfData['fetchTimeDiff'] = float(fetchTimeCurr - fetchTimePrev) / float(perfData['fetchTotalDiff'])
+            except:
+                perfData['fetchTimeDiff'] = 0.0
+
             perfData['mergeTotalDiff'] = (mergeTotalCurr - mergeTotalPrev) / interval
-            perfData['mergeTimeDiff'] = (mergeTimeCurr - mergeTimePrev) / interval
+            try:
+                perfData['mergeTimeDiff'] = float(mergeTimeCurr - mergeTimePrev) / float(perfData['mergeTotalDiff'])
+            except:
+                perfData['mergeTimeDiff'] = 0.0
+
             perfData['refreshTotalDiff'] = (refreshTotalCurr - refreshTotalPrev) / interval
-            perfData['refreshTimeDiff'] = (refreshTimeCurr - refreshTimePrev) / interval
+            try:
+                perfData['refreshTimeDiff'] = float(refreshTimeCurr - refreshTimePrev) / float(perfData['refreshTotalDiff'])
+            except:
+                perfData['refreshTimeDiff'] = 0.0
+
             perfData['flushTotalDiff'] = (flushTotalCurr - flushTotalPrev) / interval
-            perfData['flushTimeDiff'] = (flushTimeCurr - flushTimePrev) / interval
+            try:
+                perfData['flushTimeDiff'] = float(flushTimeCurr - flushTimePrev) / float(perfData['flushTotalDiff'])
+            except:
+                perfData['flushTimeDiff'] = 0.0
 
             printData(perfData)
 
