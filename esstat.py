@@ -31,10 +31,12 @@ def printHeader():
 
 def printData(perfData):
 
-    print "%10s\t%10s\t%12.2f\t%10s\t%12.2f\t%10s\t%12.2f\t%10s\t%122f" % \
+    print "%10s\t%10s\t%12.2f\t%10s\t%12.2f\t%10s\t%12.2f\t%10s\t%12.2f" % \
         (perfData['clusterHealth'], perfData['indexTotalDiff'], perfData['indexTimeDiff'], perfData['getTotalDiff'], perfData['getTimeDiff'], perfData['queryTotalDiff'], perfData['queryTimeDiff'], perfData['fetchTotalDiff'], perfData['fetchTimeDiff'])
 
 def main():
+
+    line = 0
 
     parser = argparse.ArgumentParser()
 
@@ -147,8 +149,12 @@ def main():
             except:
                 perfData['flushTimeDiff'] = 0.0
 
+            if line%10 == 0 :
+                print "\n"
+                printHeader()
             printData(perfData)
 
+        line = line+1
         indexTotalPrev = indexTotalCurr
         indexTimePrev = indexTimeCurr
         getTotalPrev = getTotalCurr
