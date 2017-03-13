@@ -28,9 +28,12 @@ optional arguments:
   --url URL            the url of cluster (default localhost)
   --port PORT          the port of cluster (default 9200)
   --interval INTERVAL  the interval of stat api request (default 1s)
+  --mode MODE          monitoring mode , cluster is cluster health and tps , node is node health and gc infomation (default cluster)
 ```
 
 ## Example
+
+1) Cluster Mode
 ```
 [root@server ~]# python ./esstat.py
     health	     doc/s	  time/doc	     get/s	  time/get	   query/s	time/query	   fetch/s	time/fetch
@@ -56,6 +59,24 @@ optional arguments:
      green	         0	         0	         0	         0	         0	         0	         0	         0
      green	         0	         0	         0	         0	         0	         0	         0	         0
 ```
+
+2) Node Mode
+```
+[root@server ~]# python ./esstat.py --mode node
+                name	heap used ratio (%)	young gc time(ms)	old gc time(ms)
+
+ search-node03	             72.00	              0.00	              0.00
+ search-node01	             25.00	              0.00	              0.00
+ search-node02	             53.00	              0.00	              0.00
+ search-node04	             79.00	              0.00	              0.00
+ search-node05	             26.00	              0.00	              0.00
+
+ search-node03	             73.00	              0.00	              0.00
+ search-node01	             21.00	             43.00	              0.00
+ search-node02	             49.00	             36.00	              0.00
+ search-node04	             81.00	              0.00	              0.00
+ search-node05	             22.00	             32.00	              0.00
+ ```
 
 ## Changelog
 
